@@ -14,13 +14,13 @@ const providerOptions = {
       }, // Replace with your Infura ID
     },
   },
-  coinbasewallet: {
-    package: require("@coinbase/wallet-sdk"), // Add Coinbase Wallet
-    options: {
-      appName: "Web3 App", // Your app name
-      infuraId: "71fa40c47d0c440d9eb7ab84788b0a0b", // Replace with your Infura ID
-    },
-  },
+  // coinbasewallet: {
+  //   package: require("@coinbase/wallet-sdk"), // Add Coinbase Wallet
+  //   options: {
+  //     appName: "Web3 App", // Your app name
+  //     infuraId: "71fa40c47d0c440d9eb7ab84788b0a0b", // Replace with your Infura ID
+  //   },
+  // },
 };
 
 // Create Web3Modal instance
