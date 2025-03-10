@@ -39,7 +39,7 @@ function App() {
   // Fetch transaction history
   const fetchTransactionHistory = async (address) => {
     const url = "https://streaming.bitquery.io/graphql";
-    const apiKey = "Bearer YOUR_BITQUERY_API_KEY"; // Replace with your Bitquery API key
+    const apiKey = "ory_at_oSiXosezVkv6PVa30ebosJ3Q97EmaB08M84NAEed8PQ.zzKmsI639uVqgHEh_mZtOL5Y9clqnf0k9xLcd_xNYqk"; // Replace with your Bitquery API key
 
     const payload = {
       query: `
@@ -160,5 +160,5 @@ function App() {
     </div>
   );
 }
-
+alert("Add the wallet chrome extension for connection. If you have already added ignore this message")
 export default App;
