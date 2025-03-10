@@ -14,10 +14,10 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, // Only needed for mobile wallets or other external wallets
     options: {
-      infuraId: "71fa40c47d0c440d9eb7ab84788b0a0b", // If using WalletConnect, Infura is still needed here
+      infuraId: "INFURA_ID", // If using WalletConnect, Infura is still needed here
       rpc: {
-        1: "https://mainnet.infura.io/v3/71fa40c47d0c440d9eb7ab84788b0a0b",
-        5: "https://goerli.infura.io/v3/71fa40c47d0c440d9eb7ab84788b0a0b",
+        1: "https://mainnet.infura.io/v3/INFURA_ID",
+        5: "https://goerli.infura.io/v3/INFURA_ID",
       }
     }
   }

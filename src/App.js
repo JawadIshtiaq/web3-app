@@ -39,7 +39,7 @@ function App() {
   // Fetch transaction history
   const fetchTransactionHistory = async (address) => {
     const url = "https://streaming.bitquery.io/graphql";
-    const apiKey = "ory_at_oSiXosezVkv6PVa30ebosJ3Q97EmaB08M84NAEed8PQ.zzKmsI639uVqgHEh_mZtOL5Y9clqnf0k9xLcd_xNYqk"; // Replace with your Bitquery API key
+    const apiKey = "BitQUERY API KEY"; // Replace with your Bitquery API key
 
     const payload = {
       query: `
