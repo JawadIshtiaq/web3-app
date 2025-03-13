@@ -1,4 +1,3 @@
-// WalletDashboard.js
 import React, { useState, useEffect, useCallback } from "react";
 import { isAddress } from "ethers";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,16 +8,23 @@ function WalletDashboard() {
   const navigate = useNavigate();
   const { walletData } = location.state || {};
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // If walletData is missing, redirect back to home page
+  const disconnectWallet = useCallback(async () => {
+    // Clear cached provider and navigate back to home
+    window.localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER");
+    navigate("/");
+  }, [navigate]);
+
   useEffect(() => {
     if (!walletData) {
       navigate("/");
     } else {
       fetchTransactionHistory(walletData.walletAddress);
     }
-  }, [walletData]);
+  }, [walletData, navigate]);
 
+  // Listen for disconnect events
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
       if (!accounts || accounts.length === 0) {
@@ -41,7 +47,7 @@ function WalletDashboard() {
         window.ethereum.removeListener("disconnect", handleDisconnect);
       }
     };
-  }, []);
+  }, [disconnectWallet]);
 
   const fetchTransactionHistory = async (walletAddress) => {
     if (!isAddress(walletAddress)) {
@@ -49,11 +55,12 @@ function WalletDashboard() {
       return;
     }
 
+    setLoading(true);
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
-      "Bearer BITQUERY API KEY"
+      "Bearer ory_at_oSiXosezVkv6PVa30ebosJ3Q97EmaB08M84NAEed8PQ.zzKmsI639uVqgHEh_mZtOL5Y9clqnf0k9xLcd_xNYqk"
     );
 
     const variables = {
@@ -61,7 +68,7 @@ function WalletDashboard() {
       network: "eth",
       from: "2025-03-05", // Adjust as needed
       till: new Date().toISOString().split("T")[0],
-      address: walletAddress,
+      address: walletData.walletAddress,
       dateFormat: "%Y-%m-%d",
       date_middle: "2025-03-08",
       mempool: false,
@@ -109,15 +116,13 @@ function WalletDashboard() {
         console.log("Wallet API Response:", data);
         const txs = data.data?.EVM?.Transactions || [];
         setTransactions(txs);
+        setLoading(false);
       })
-      .catch((error) => console.error("Error fetching transactions:", error));
+      .catch((error) => {
+        console.error("Error fetching transactions:", error);
+        setLoading(false);
+      });
   };
-
-  const disconnectWallet = useCallback(async () => {
-    // Clear cached provider and navigate back to home
-    window.localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER");
-    navigate("/");
-  }, [navigate]);
 
   return (
     <div className="container">
@@ -125,18 +130,23 @@ function WalletDashboard() {
       <div className="wallet-info">
         <h2>Wallet Information</h2>
         <p>
-          <strong>Address:</strong> <span className="address">{walletData.walletAddress}</span>
+          <strong>Address:</strong>{" "}
+          <span className="address">{walletData.walletAddress}</span>
         </p>
         <p>
-          <strong>Network:</strong> <span className="network">{walletData.network}</span>
+          <strong>Network:</strong>{" "}
+          <span className="network">{walletData.network}</span>
         </p>
         <p>
-          <strong>Balance:</strong> <span className="balance">{walletData.balance} ETH</span>
+          <strong>Balance:</strong>{" "}
+          <span className="balance">{walletData.balance} ETH</span>
         </p>
       </div>
       <div className="analytics">
         <h2>Transaction History</h2>
-        {transactions.length > 0 ? (
+        {loading ? (
+          <p>Fetching transactions...</p>
+        ) : transactions.length > 0 ? (
           <div className="transactions">
             {transactions.map((tx, index) => (
               <div key={index} className="transaction">
@@ -147,7 +157,8 @@ function WalletDashboard() {
                   <strong>To:</strong> {tx.Transaction.To}
                 </p>
                 <p>
-                  <strong>Status:</strong> {tx.TransactionStatus.Success ? "Success" : "Failed"}
+                  <strong>Status:</strong>{" "}
+                  {tx.TransactionStatus.Success ? "Success" : "Failed"}
                 </p>
                 <p>
                   <strong>Gas Cost:</strong> {tx.gas_cost} ETH

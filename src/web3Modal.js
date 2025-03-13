@@ -8,15 +8,15 @@ const providerOptions = {
       name: "MetaMask/OKX Wallet", 
       description: "Connect with MetaMask or OKX Wallet"
     },
-    package: null,
+    package: null, // The browser extension automatically injects the provider
   },
   walletconnect: {
     package: WalletConnectProvider, // Needed for mobile or external wallets
     options: {
-      infuraId: "INFURA_ID", // If using WalletConnect, Infura is still needed here
+      infuraId: "71fa40c47d0c440d9eb7ab84788b0a0b", // Infura ID is required
       rpc: {
-        1: "https://mainnet.infura.io/v3/INFURA_ID",
-        5: "https://goerli.infura.io/v3/INFURA_ID",
+        1: "https://mainnet.infura.io/v3/71fa40c47d0c440d9eb7ab84788b0a0b",
+        5: "https://goerli.infura.io/v3/71fa40c47d0c440d9eb7ab84788b0a0b",
       }
     }
   }

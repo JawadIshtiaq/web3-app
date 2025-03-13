@@ -8,6 +8,7 @@ function ManualDashboard() {
   const navigate = useNavigate();
   const { manualAddress } = location.state || {};
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!manualAddress) {
@@ -15,7 +16,7 @@ function ManualDashboard() {
     } else {
       fetchTransactionHistory(manualAddress);
     }
-  }, [manualAddress]);
+  }, [manualAddress, navigate]);
 
   const fetchTransactionHistory = async (walletAddress) => {
     if (!isAddress(walletAddress)) {
@@ -23,11 +24,13 @@ function ManualDashboard() {
       return;
     }
 
+    setLoading(true);
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
-      "Bearer BITQUERY API KEY"
+      "Bearer ory_at_oSiXosezVkv6PVa30ebosJ3Q97EmaB08M84NAEed8PQ.zzKmsI639uVqgHEh_mZtOL5Y9clqnf0k9xLcd_xNYqk"
     );
 
     const variables = {
@@ -83,8 +86,12 @@ function ManualDashboard() {
         console.log("Manual API Response:", data);
         const txs = data.data?.EVM?.Transactions || [];
         setTransactions(txs);
+        setLoading(false); 
       })
-      .catch((error) => console.error("Error fetching transactions:", error));
+      .catch((error) => {
+        console.error("Error fetching transactions:", error);
+        setLoading(false); 
+      });
   };
 
   return (
@@ -93,7 +100,9 @@ function ManualDashboard() {
       <p>Showing transactions for: {manualAddress}</p>
       <div className="analytics">
         <h2>Transaction History</h2>
-        {transactions.length > 0 ? (
+        {loading ? (
+          <p>Fetching transactions...</p>
+        ) : transactions.length > 0 ? (
           <div className="transactions">
             {transactions.map((tx, index) => (
               <div key={index} className="transaction">
