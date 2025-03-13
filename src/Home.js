@@ -1,4 +1,3 @@
-// Home.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BrowserProvider, formatEther } from "ethers";
@@ -33,7 +32,6 @@ function Home() {
 
   const handleManualAddressSubmit = () => {
     if (manualAddress.trim()) {
-      // Navigate to ManualDashboard passing the manual address via state
       navigate("/manual-dashboard", { state: { manualAddress } });
     } else {
       alert("Please enter a wallet address.");

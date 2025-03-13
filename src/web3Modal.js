@@ -1,16 +1,14 @@
-// Web3Modal.js
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
-// Configure provider options
 const providerOptions = {
   injected: {
     // This allows MetaMask, OKX Wallet, and any other injected wallet extension
     display: {
-      name: "MetaMask/OKX Wallet",  // Shown in the Web3Modal UI
+      name: "MetaMask/OKX Wallet", 
       description: "Connect with MetaMask or OKX Wallet"
     },
-    package: null, // The browser extension automatically injects the provider
+    package: null,
   },
   walletconnect: {
     package: WalletConnectProvider, // Needed for mobile or external wallets
@@ -26,9 +24,9 @@ const providerOptions = {
 
 // Create Web3Modal instance
 const web3Modal = new Web3Modal({
-  network: "mainnet", // Default network (adjust as needed)
-  cacheProvider: true, // Enable caching of the provider
-  providerOptions,    // Provider options defined above
+  network: "mainnet",
+  cacheProvider: true,
+  providerOptions,    
 });
 
 export default web3Modal;

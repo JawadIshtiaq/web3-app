@@ -11,12 +11,10 @@ function ManualDashboard() {
 
   useEffect(() => {
     if (!manualAddress) {
-      // Redirect back if no manual address was provided
       navigate("/");
     } else {
       fetchTransactionHistory(manualAddress);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manualAddress]);
 
   const fetchTransactionHistory = async (walletAddress) => {
@@ -29,11 +27,11 @@ function ManualDashboard() {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
-      "Bearer ory_at_Ds3cXxbarm_SktddM1pX-2Gvb0zBzAYHoPeaOYY7mDw.XVZoxpj6BC9iHxSpQLEPqykTxCvSfRuBqEb8kB28Lpg"
+      "Bearer BITQUERY API KEY"
     );
 
     const variables = {
-      limit: 10,
+      limit: 20,
       network: "eth",
       from: "2025-03-05", // Adjust as needed
       till: new Date().toISOString().split("T")[0],

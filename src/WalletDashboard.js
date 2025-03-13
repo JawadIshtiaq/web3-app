@@ -17,10 +17,8 @@ function WalletDashboard() {
     } else {
       fetchTransactionHistory(walletData.walletAddress);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletData]);
 
-  // Add event listeners for disconnect events
   useEffect(() => {
     const handleAccountsChanged = (accounts) => {
       if (!accounts || accounts.length === 0) {
@@ -43,7 +41,6 @@ function WalletDashboard() {
         window.ethereum.removeListener("disconnect", handleDisconnect);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchTransactionHistory = async (walletAddress) => {
